@@ -1,52 +1,36 @@
 @import 'tailwindcss';
 
-@theme {
-  /* Colors for light theme (default) */
-  --color-background: oklch(1 0 0);
-  --color-foreground: oklch(0.145 0 0);
-  --color-gray-50: oklch(0.985 0.002 247.858);
-  --color-gray-100: oklch(0.967 0.003 247.896);
-  --color-gray-200: oklch(0.928 0.006 247.896);
-  --color-gray-300: oklch(0.869 0.01 255.508);
-  --color-gray-400: oklch(0.704 0.015 256.788);
-  --color-gray-500: oklch(0.554 0.018 257.417);
-  --color-gray-600: oklch(0.446 0.02 257.281);
-  --color-gray-700: oklch(0.372 0.019 257.287);
-  --color-gray-800: oklch(0.279 0.016 257.272);
-  --color-gray-900: oklch(0.21 0.014 257.265);
-  --font-sans: ui-sans-serif, system-ui, sans-serif, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial;
-}
-
-/* Dark mode colors using :where(.dark) */
+/* Base styles */
 :root {
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
+  background: #ffffff;
+  color: #111827;
 }
 
-/* When the .dark class is present (applied by next-themes) */
-:where(.dark) {
-  --color-background: oklch(0.145 0 0);
-  --color-foreground: oklch(0.985 0.002 247.858);
-  --color-gray-50: oklch(0.21 0.014 257.265);
-  --color-gray-100: oklch(0.279 0.016 257.272);
-  --color-gray-200: oklch(0.372 0.019 257.287);
-  --color-gray-300: oklch(0.446 0.02 257.281);
-  --color-gray-400: oklch(0.554 0.018 257.417);
-  --color-gray-500: oklch(0.704 0.015 256.788);
-  --color-gray-600: oklch(0.869 0.01 255.508);
-  --color-gray-700: oklch(0.928 0.006 247.896);
-  --color-gray-800: oklch(0.967 0.003 247.896);
-  --color-gray-900: oklch(0.985 0.002 247.858);
-}
-
-/* Basic styles */
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--color-background);
-  color: var(--color-foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  font-family: var(--font-sans);
+  background: #ffffff;
+  color: #111827;
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar custom */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
 }
