@@ -1,26 +1,52 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
+@theme {
+  /* Colors for light theme (default) */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0 0);
+  --color-gray-50: oklch(0.985 0.002 247.858);
+  --color-gray-100: oklch(0.967 0.003 247.896);
+  --color-gray-200: oklch(0.928 0.006 247.896);
+  --color-gray-300: oklch(0.869 0.01 255.508);
+  --color-gray-400: oklch(0.704 0.015 256.788);
+  --color-gray-500: oklch(0.554 0.018 257.417);
+  --color-gray-600: oklch(0.446 0.02 257.281);
+  --color-gray-700: oklch(0.372 0.019 257.287);
+  --color-gray-800: oklch(0.279 0.016 257.272);
+  --color-gray-900: oklch(0.21 0.014 257.265);
+  --font-sans: ui-sans-serif, system-ui, sans-serif, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial;
+}
+
+/* Dark mode colors using :where(.dark) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* When the .dark class is present (applied by next-themes) */
+:where(.dark) {
+  --color-background: oklch(0.145 0 0);
+  --color-foreground: oklch(0.985 0.002 247.858);
+  --color-gray-50: oklch(0.21 0.014 257.265);
+  --color-gray-100: oklch(0.279 0.016 257.272);
+  --color-gray-200: oklch(0.372 0.019 257.287);
+  --color-gray-300: oklch(0.446 0.02 257.281);
+  --color-gray-400: oklch(0.554 0.018 257.417);
+  --color-gray-500: oklch(0.704 0.015 256.788);
+  --color-gray-600: oklch(0.869 0.01 255.508);
+  --color-gray-700: oklch(0.928 0.006 247.896);
+  --color-gray-800: oklch(0.967 0.003 247.896);
+  --color-gray-900: oklch(0.985 0.002 247.858);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Basic styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-sans);
 }
