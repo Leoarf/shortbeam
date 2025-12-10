@@ -11,7 +11,6 @@ import { createShortUrlSchema, CreateShortUrlInput } from '@/lib/validation';
 
 export function UrlShortener() {
   const [shortenedUrl, setShortenedUrl] = useState('');
-  const [expiration, setExpiration] = useState('');
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -59,7 +58,6 @@ export function UrlShortener() {
       }
 
       setShortenedUrl(result.shortUrl);
-      setExpiration('');
     } catch (error) {
       alert(error instanceof Error ? error.message : 'Erro desconhecido');
     } finally {
@@ -96,15 +94,12 @@ export function UrlShortener() {
           errors={errors}
           customSlug={customSlug}
           setCustomSlug={(value) => setValue('customSlug', value)}
-          expiration={expiration}
-          setExpiration={setExpiration}
           isLoading={isLoading}
           onSubmit={handleSubmit(onSubmit)}
         />
         {shortenedUrl && (
           <ResultDisplay
             shortenedUrl={shortenedUrl}
-            expiration={expiration}
             onCopy={handleCopy}
             copied={copied}
           />

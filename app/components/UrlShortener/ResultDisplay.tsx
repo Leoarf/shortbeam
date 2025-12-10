@@ -5,14 +5,12 @@ import Link from 'next/link';
 
 interface ResultDisplayProps {
   shortenedUrl: string;
-  expiration: string;
   onCopy: () => void;
   copied: boolean;
 }
 
 export function ResultDisplay({
   shortenedUrl,
-  expiration,
   onCopy,
   copied,
 }: ResultDisplayProps) {
@@ -84,7 +82,7 @@ export function ResultDisplay({
               Expira
             </div>
             <p className="text-xs sm:text-sm text-gray-600 mt-1 whitespace-nowrap">
-              {expiration || 'Nunca'}
+              Nunca
             </p>
           </div>
         </div>

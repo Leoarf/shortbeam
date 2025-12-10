@@ -10,8 +10,6 @@ interface UrlInputFormProps {
   errors: FieldErrors<CreateShortUrlInput>;
   customSlug: string;
   setCustomSlug: (value: string) => void;
-  expiration: string;
-  setExpiration: (value: string) => void;
   isLoading: boolean;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
 }
@@ -21,8 +19,6 @@ export function UrlInputForm({
   errors,
   customSlug,
   setCustomSlug,
-  expiration,
-  setExpiration,
   isLoading,
   onSubmit,
 }: UrlInputFormProps) {
@@ -53,8 +49,6 @@ export function UrlInputForm({
       <AdvancedOptions
         customSlug={customSlug}
         setCustomSlug={setCustomSlug}
-        expiration={expiration}
-        setExpiration={setExpiration}
       />
       {errors.customSlug && (
         <div className="flex items-center gap-2 text-sm text-red-600">
