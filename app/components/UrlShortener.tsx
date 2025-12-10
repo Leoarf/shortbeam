@@ -1,33 +1,70 @@
 'use client';
 
 import { useState } from 'react';
-import { Link, Globe, Sparkles } from 'lucide-react';
-import { AdvancedOptions } from './UrlShortener/AdvancedOptions';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Sparkles } from 'lucide-react';
+import { UrlInputForm } from './UrlShortener/UrlInputForm';
 import { ResultDisplay } from './UrlShortener/ResultDisplay';
+import { AdditionalInfo } from './UrlShortener/AdditionalInfo';
+import { createShortUrlSchema, CreateShortUrlInput } from '@/lib/validation';
 
 export function UrlShortener() {
-  const [url, setUrl] = useState('');
-  const [customSlug, setCustomSlug] = useState('');
-  const [expiration, setExpiration] = useState('');
-  const [password, setPassword] = useState('');
   const [shortenedUrl, setShortenedUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [expiration, setExpiration] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!url.trim()) return;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<CreateShortUrlInput>({
+    resolver: zodResolver(createShortUrlSchema),
+    defaultValues: {
+      url: '',
+      customSlug: '',
+    },
+  });
 
+  const customSlug = watch('customSlug') || ''; // Ensure that it is not undefined
+
+  const onSubmit = async (data: CreateShortUrlInput) => {
     setIsLoading(true);
 
-    // Request simulation
-    setTimeout(() => {
-      const slug =
-        customSlug.trim() || Math.random().toString(36).substring(2, 8);
-      const shortUrl = `https://shortb.m/${slug}`;
-      setShortenedUrl(shortUrl);
+    try {
+      const response = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (result.details) {
+          const slugError = result.details.find(
+            (err: any) => err.field === 'customSlug'
+          );
+          if (slugError) {
+            throw new Error(slugError.message);
+          }
+          throw new Error(result.error || 'Validação falhou');
+        }
+        throw new Error(result.error || 'Erro ao encurtar URL');
+      }
+
+      setShortenedUrl(result.shortUrl);
+      setExpiration('');
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'Erro desconhecido');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleCopy = () => {
@@ -54,47 +91,16 @@ export function UrlShortener() {
         </p>
       </div>
       <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* URL Input */}
-          <div className="relative">
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-              <Globe className="w-5 h-5 text-gray-400" />
-            </div>
-            <input
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://exemplo.com/url-muito-longa-para-compartilhar"
-              className="w-full pl-12 pr-4 py-4 text-base rounded-xl border-2 border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
-              required
-            />
-          </div>
-          <AdvancedOptions
-            customSlug={customSlug}
-            setCustomSlug={setCustomSlug}
-            expiration={expiration}
-            setExpiration={setExpiration}
-            password={password}
-            setPassword={setPassword}
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !url.trim()}
-            className="w-full py-4 px-6 bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold text-lg rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
-          >
-            {isLoading ? (
-              <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Encurtando...</span>
-              </>
-            ) : (
-              <>
-                <Link className="w-5 h-5" />
-                <span>Encurtar URL</span>
-              </>
-            )}
-          </button>
-        </form>
+        <UrlInputForm
+          register={register}
+          errors={errors}
+          customSlug={customSlug}
+          setCustomSlug={(value) => setValue('customSlug', value)}
+          expiration={expiration}
+          setExpiration={setExpiration}
+          isLoading={isLoading}
+          onSubmit={handleSubmit(onSubmit)}
+        />
         {shortenedUrl && (
           <ResultDisplay
             shortenedUrl={shortenedUrl}
@@ -105,25 +111,6 @@ export function UrlShortener() {
         )}
       </div>
       <AdditionalInfo />
-    </div>
-  );
-}
-
-function AdditionalInfo() {
-  return (
-    <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-      <div className="bg-gray-50 p-4 rounded-xl">
-        <div className="text-2xl font-bold text-green-600 mb-1">100%</div>
-        <p className="text-sm text-gray-600">Seguro e criptografado</p>
-      </div>
-      <div className="bg-gray-50 p-4 rounded-xl">
-        <div className="text-2xl font-bold text-green-600 mb-1">&lt; 1s</div>
-        <p className="text-sm text-gray-600">Processamento rápido</p>
-      </div>
-      <div className="bg-gray-50 p-4 rounded-xl">
-        <div className="text-2xl font-bold text-green-600 mb-1">Grátis</div>
-        <p className="text-sm text-gray-600">Para sempre</p>
-      </div>
     </div>
   );
 }
