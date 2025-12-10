@@ -9,13 +9,13 @@ export default function Home() {
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       <Header />
       <main className="pb-16">
-        <section className="pt-8 sm:pt-12 md:pt-16">
+        <section id="home" className="pt-8 sm:pt-12 md:pt-16 scroll-mt-20">
           <UrlShortener />
         </section>
-        <section className="mt-8 sm:mt-12">
+        <section id="resources" className="mt-8 sm:mt-12 scroll-mt-20">
           <Stats />
         </section>
-        <section className="mt-16 sm:mt-24">
+        <section id="about" className="mt-16 sm:mt-24 scroll-mt-20">
           <Technologies />
         </section>
       </main>

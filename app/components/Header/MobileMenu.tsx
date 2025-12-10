@@ -8,6 +8,22 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -38,27 +54,24 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         {/* Menu Content */}
         <div className="p-4">
           <div className="flex flex-col space-y-2">
-            <a
-              href="#"
-              className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium"
-              onClick={onClose}
+            <button
+              onClick={() => scrollToSection('home')}
+              className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium text-left"
             >
               Início
-            </a>
-            <a
-              href="#"
-              className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium"
-              onClick={onClose}
+            </button>
+            <button
+              onClick={() => scrollToSection('resources')}
+              className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium text-left"
             >
               Recursos
-            </a>
-            <a
-              href="#"
-              className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium"
-              onClick={onClose}
+            </button>
+            <button
+              onClick={() => scrollToSection('about')}
+              className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium text-left"
             >
               Sobre
-            </a>
+            </button>
           </div>
           {/* Auth Section */}
           <div className="mt-8 pt-6 border-t border-gray-200 space-y-3">
