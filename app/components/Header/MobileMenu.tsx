@@ -89,7 +89,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               onClick={onClose}
             >
               <UserPlus className="w-4 h-4" />
-              <span>Criar Conta</span>
+              <span>Cadastrar</span>
             </a>
           </div>
         </div>
