@@ -1,14 +1,20 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Logo } from './Header/Logo';
 import { DesktopNav } from './Header/DesktopNav';
 import { AuthButtons } from './Header/AuthButtons';
 import { MobileMenu } from './Header/MobileMenu';
 import { MobileMenuButton } from './Header/MobileMenuButton';
+import { HeaderAuth } from './Header/HeaderAuth';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Check if we are on an authentication page
+  const isAuthPage = pathname === '/login' || pathname === '/register';
 
   // Block scrolling when menu is open
   useEffect(() => {
@@ -31,6 +37,11 @@ export function Header() {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
+
+  // If it's an authentication page, use a simplified header
+  if (isAuthPage) {
+    return <HeaderAuth />;
+  }
 
   return (
     <>
