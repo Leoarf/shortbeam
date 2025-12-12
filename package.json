@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^5.17.0",
     "axios": "^1.13.2",
+    "bcrypt": "^6.0.0",
     "lucide-react": "^0.556.0",
     "next": "16.0.8",
     "next-intl": "^4.5.8",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
