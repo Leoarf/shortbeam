@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
+import { AuthProvider } from './context/AuthContext';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ShortBeam - Encurtador de URL',
-  description: 'Encurte seus links de forma rápida e simples',
+  title: 'ShortBeam - Encurtador de URLs',
+  description: 'Encurte seus links de forma rápida e gratuita',
 };
 
 export default function RootLayout({
@@ -12,8 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt">
-      <body className="min-h-screen bg-white text-gray-900">{children}</body>
+    <html lang="pt-BR">
+      <body className={inter.className}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
