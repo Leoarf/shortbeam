@@ -1,7 +1,4 @@
-'use client';
-
-import { Copy, Check, BarChart3, ExternalLink } from 'lucide-react';
-import Link from 'next/link';
+import { Copy, Check, ExternalLink } from 'lucide-react';
 
 interface ResultDisplayProps {
   shortenedUrl: string;
@@ -14,77 +11,68 @@ export function ResultDisplay({
   onCopy,
   copied,
 }: ResultDisplayProps) {
-  // Extract the URL slug for the statistics link
-  const slug = shortenedUrl.split('/').pop() || '';
+  // Extract the domain for cleaner display on mobile
+  const getDisplayUrl = (url: string) => {
+    try {
+      const urlObj = new URL(url);
+      const path = urlObj.pathname.slice(1); // Remove the leading slash
+      return `/${path}`;
+    } catch {
+      return url;
+    }
+  };
 
   return (
-    <div className="mt-8 p-4 sm:p-6 bg-linear-to-r from-green-50 to-emerald-50 rounded-xl border-2 border-green-200">
-      <div className="space-y-4">
-        {/* Header */}
-        <div>
-          <p className="text-sm text-gray-700 mb-2">Seu link encurtado:</p>
-          <div className="flex flex-col sm:flex-row sm:items-start gap-3">
-            <div className="flex-1 min-w-0">
+    <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
+      <div className="flex flex-col gap-3 sm:gap-4">
+        <div className="text-xs sm:text-sm font-medium text-green-800">
+          ✅ Link encurtado com sucesso!
+        </div>
+        <div className="space-y-2">
+          {/* Full URL */}
+          <a
+            href={shortenedUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-2 text-green-600 hover:text-green-700 font-mono text-sm sm:text-base font-bold truncate"
+          >
+            {shortenedUrl}
+            <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+          </a>
+          {/* Mobile version */}
+          <div className="sm:hidden flex items-center justify-between bg-white rounded-lg p-2 border border-green-200">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-green-600 font-mono text-sm truncate">
+                {getDisplayUrl(shortenedUrl)}
+              </span>
               <a
                 href={shortenedUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-base sm:text-lg font-mono text-green-700 hover:text-green-800 hover:underline break-all flex items-start gap-2"
+                className="text-green-600 hover:text-green-700"
               >
-                <span className="break-all">{shortenedUrl}</span>
-                <ExternalLink className="w-4 h-4 shrink-0 mt-1" />
+                <ExternalLink className="w-3 h-3" />
               </a>
-            </div>
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2">
-              <button
-                onClick={onCopy}
-                className="px-4 py-2.5 sm:px-5 sm:py-3 bg-white border-2 border-green-600 text-green-700 hover:bg-green-50 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 font-medium text-sm sm:text-base"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="whitespace-nowrap">Copiado!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="whitespace-nowrap">Copiar</span>
-                  </>
-                )}
-              </button>
-              <Link
-                href={`/stats/${slug}`}
-                className="px-4 py-2.5 sm:px-5 sm:py-3 bg-green-600 text-white hover:bg-green-700 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 font-medium text-sm sm:text-base"
-              >
-                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="whitespace-nowrap">Estatísticas</span>
-              </Link>
             </div>
           </div>
         </div>
-        {/* Stats Grid */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-4 border-t border-green-200">
-          <div className="text-center p-2 sm:p-3 bg-white/50 rounded-lg">
-            <div className="text-xs sm:text-sm font-medium text-green-600">
-              0
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1">Cliques</p>
-          </div>
-          <div className="text-center p-2 sm:p-3 bg-white/50 rounded-lg">
-            <div className="text-xs sm:text-sm font-medium text-gray-700">
-              Criado
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1">Agora</p>
-          </div>
-          <div className="text-center p-2 sm:p-3 bg-white/50 rounded-lg">
-            <div className="text-xs sm:text-sm font-medium text-gray-700">
-              Expira
-            </div>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1 whitespace-nowrap">
-              Nunca
-            </p>
-          </div>
+        <div className="flex justify-center sm:justify-end">
+          <button
+            onClick={onCopy}
+            className="w-full sm:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium flex items-center justify-center gap-1.5 sm:gap-2 transition-colors text-sm sm:text-base"
+          >
+            {copied ? (
+              <>
+                <Check className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="whitespace-nowrap">Copiado!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="whitespace-nowrap">Copiar Link</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>
