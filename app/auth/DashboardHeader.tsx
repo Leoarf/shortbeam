@@ -22,7 +22,7 @@ export function DashboardHeader() {
             <div className="w-8 h-8 bg-green-600 text-white rounded-lg flex items-center justify-center">
               <LinkIcon className="w-4 h-4" />
             </div>
-            <span className="font-bold text-lg text-gray-900">ShortB</span>
+            <span className="font-bold text-lg text-gray-900">ShortBeam</span>
           </div>
           <div className="flex items-center gap-2">
             {/* Back to home */}
