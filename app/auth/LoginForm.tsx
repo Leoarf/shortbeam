@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { EmailField } from './login/EmailField';
 import { PasswordField } from './login/PasswordField';
 import { AuthMessage } from './login/AuthMessage';
 import { useAuth } from '../context/AuthContext';
 
-export function LoginForm() {
+function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login } = useAuth();
@@ -124,5 +124,21 @@ export function LoginForm() {
         </div>
       </form>
     </div>
+  );
+}
+
+export function LoginForm() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200">
+          <div className="flex justify-center items-center h-40">
+            <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        </div>
+      }
+    >
+      <LoginFormContent />
+    </Suspense>
   );
 }
