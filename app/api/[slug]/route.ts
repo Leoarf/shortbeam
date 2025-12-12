@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+type GeoData = {
+  country?: string;
+  city?: string;
+  region?: string;
+  latitude?: number;
+  longitude?: number;
+};
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -8,7 +16,6 @@ export async function GET(
   try {
     const { slug } = await params;
 
-    // Find the original URL
     const shortUrl = await prisma.shortUrl.findUnique({
       where: { slug },
     });
@@ -20,33 +27,36 @@ export async function GET(
       );
     }
 
-    // Update click counter
-    await prisma.shortUrl.update({
-      where: { slug },
-      data: { clicks: { increment: 1 } },
-    });
+    // GEO VERCEL
+    const geo = (request as NextRequest & { geo?: GeoData }).geo;
 
-    // Collect analytics data
+    // HEADERS
     const ip =
-      request.headers.get('x-forwarded-for') ||
-      request.headers.get('x-real-ip') ||
-      'unknown';
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null;
+
     const userAgent = request.headers.get('user-agent');
     const referrer = request.headers.get('referer');
 
-    // Record analytics in the background
-    prisma.analytics
-      .create({
+    // ATT CLICKS + ANALYTICS
+    await Promise.all([
+      prisma.shortUrl.update({
+        where: { slug },
+        data: { clicks: { increment: 1 } },
+      }),
+
+      prisma.analytics.create({
         data: {
           slug,
           ip,
           userAgent,
           referrer,
+          country: geo?.country ?? null, // BR, US
+          city: geo?.city ?? null,
         },
-      })
-      .catch(console.error);
+      }),
+    ]);
 
-    // Return the URL as JSON (DO NOT redirect!)
+    // Return JSON (no redirect)
     return NextResponse.json({
       url: shortUrl.url,
       slug: shortUrl.slug,
