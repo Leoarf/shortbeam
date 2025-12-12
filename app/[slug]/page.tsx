@@ -78,7 +78,7 @@ export default function RedirectPage({ params }: PageProps) {
   // Loading screen
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-50 to-white p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-gray-50 to-white p-4">
         <div className="text-center max-w-md">
           <Loader2 className="w-12 h-12 text-green-600 animate-spin mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -97,7 +97,7 @@ export default function RedirectPage({ params }: PageProps) {
   // Error screen
   if (error) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-50 to-white p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-gray-50 to-white p-4">
         <div className="max-w-md w-full text-center">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-red-600" />
