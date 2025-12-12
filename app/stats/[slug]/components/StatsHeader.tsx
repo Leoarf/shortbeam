@@ -32,7 +32,7 @@ export function StatsHeader({ shortUrl, originalUrl, slug }: StatsHeaderProps) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 sm:gap-3 mb-2">
               <Link
-                href="/"
+                href="/dashboard"
                 className="text-gray-500 hover:text-gray-700 p-1"
                 aria-label="Voltar"
               >
