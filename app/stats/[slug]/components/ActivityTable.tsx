@@ -13,7 +13,42 @@ interface ActivityTableProps {
   analytics: AnalyticsItem[];
 }
 
+// Country mapping for flag emojis
+const countryFlags: Record<string, string> = {
+  Brasil: '🇧🇷',
+  'Estados Unidos': '🇺🇸',
+  Portugal: '🇵🇹',
+  Espanha: '🇪🇸',
+  França: '🇫🇷',
+  Alemanha: '🇩🇪',
+  Itália: '🇮🇹',
+  'Reino Unido': '🇬🇧',
+  Japão: '🇯🇵',
+  China: '🇨🇳',
+  Rússia: '🇷🇺',
+  Índia: '🇮🇳',
+  Canadá: '🇨🇦',
+  Austrália: '🇦🇺',
+  México: '🇲🇽',
+  Argentina: '🇦🇷',
+  Chile: '🇨🇱',
+  Colômbia: '🇨🇴',
+  Peru: '🇵🇪',
+  Venezuela: '🇻🇪',
+  Uruguai: '🇺🇾',
+  Paraguai: '🇵🇾',
+  Bolívia: '🇧🇴',
+  Equador: '🇪🇨',
+  Local: '🏠',
+};
+
 export function ActivityTable({ analytics }: ActivityTableProps) {
+  const getCountryWithFlag = (country: string | null) => {
+    if (!country) return '🌐 Desconhecido';
+    const flag = countryFlags[country] || '🌐';
+    return `${flag} ${country}`;
+  };
+
   return (
     <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
       <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center gap-2">
@@ -30,6 +65,9 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
                     Data/Hora
                   </th>
                   <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    IP
+                  </th>
+                  <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     País
                   </th>
                   <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -42,16 +80,19 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {analytics.length > 0 ? (
-                  analytics.slice(0, 5).map((item) => (
+                  analytics.slice(0, 10).map((item) => (
                     <tr key={item.id} className="hover:bg-gray-50">
                       <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(item.createdAt).toLocaleDateString('pt-BR')}
+                        {new Date(item.createdAt).toLocaleString('pt-BR')}
+                      </td>
+                      <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-gray-900 font-mono">
+                        {item.ip}
                       </td>
                       <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-gray-900">
-                        {item.country || 'Desconhecido'}
+                        {getCountryWithFlag(item.country)}
                       </td>
                       <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-gray-900">
-                        {item.city || 'Desconhecido'}
+                        {item.city || '—'}
                       </td>
                       <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-900 max-w-[120px] sm:max-w-[200px] truncate">
                         {item.referrer ? (
@@ -73,7 +114,7 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
                 ) : (
                   <tr>
                     <td
-                      colSpan={4}
+                      colSpan={5}
                       className="px-3 py-8 text-center text-gray-500 text-sm"
                     >
                       Nenhuma atividade registrada ainda
@@ -85,11 +126,11 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
           </div>
         </div>
       </div>
-      {analytics.length > 5 && (
+      {analytics.length > 10 && (
         <div className="mt-4 text-center">
-          <button className="text-green-600 hover:text-green-700 text-sm font-medium">
-            Ver todos os {analytics.length} registros
-          </button>
+          <span className="text-gray-500 text-sm">
+            Mostrando 10 de {analytics.length} registros
+          </span>
         </div>
       )}
     </div>

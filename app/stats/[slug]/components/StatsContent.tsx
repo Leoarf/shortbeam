@@ -5,6 +5,7 @@ import {
   Calendar,
   Globe,
   Share2,
+  Smartphone,
 } from 'lucide-react';
 import { StatsCard } from './StatsCard';
 import { TopList } from './TopList';
@@ -36,6 +37,7 @@ interface StatsContentProps {
     clicksByDate: Record<string, number>;
     topReferrers: Array<{ domain: string; count: number }>;
     topCountries: Array<{ country: string; count: number }>;
+    deviceStats?: Array<{ device: string; count: number }>;
   } | null;
 }
 
@@ -59,6 +61,16 @@ export function StatsContent({
     statistics?.topReferrers?.map((item) => ({
       label: item.domain,
       count: item.count,
+    })) || [];
+
+  // Data for device chart
+  const deviceData =
+    statistics?.deviceStats?.map((item) => ({
+      device: item.device,
+      count: item.count,
+      percentage: Math.round(
+        (item.count / (statistics?.totalClicks || 1)) * 100
+      ),
     })) || [];
 
   return (
@@ -103,6 +115,40 @@ export function StatsContent({
           emptyMessage="Nenhum referenciador disponível"
         />
       </div>
+      {/* Device Chart */}
+      {deviceData.length > 0 && (
+        <div className="mb-6 sm:mb-8">
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Dispositivos</span>
+            </h2>
+            <div className="space-y-3">
+              {deviceData.map((item) => (
+                <div
+                  key={item.device}
+                  className="flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium">{item.device}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-32 sm:w-48 bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-green-500 h-2 rounded-full"
+                        style={{ width: `${item.percentage}%` }}
+                      />
+                    </div>
+                    <span className="text-sm font-medium w-12 text-right">
+                      {item.percentage}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="mb-6 sm:mb-8">
         <ActivityTable analytics={analytics} />
       </div>
