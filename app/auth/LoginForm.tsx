@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
 import { EmailField } from './login/EmailField';
 import { PasswordField } from './login/PasswordField';
 import { AuthMessage } from './login/AuthMessage';
@@ -81,15 +80,6 @@ export function LoginForm() {
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200">
-      <div className="mb-6">
-        <button
-          onClick={() => router.push('/')}
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-green-600 text-sm font-medium mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Voltar para Home
-        </button>
-      </div>
       <form onSubmit={handleSubmit} className="space-y-6">
         {successMessage && (
           <AuthMessage type="success" message={successMessage} />
