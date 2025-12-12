@@ -1,102 +1,107 @@
 'use client';
 
-import { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { CheckCircle } from 'lucide-react';
+import { EmailField } from './login/EmailField';
+import { PasswordField } from './login/PasswordField';
+import { AuthMessage } from './login/AuthMessage';
 
 export function LoginForm() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    // Check if it came from the registration page
+    if (searchParams.get('registered') === 'true') {
+      setSuccessMessage('Conta criada com sucesso! Faça login para continuar.');
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Login simulation
-    setTimeout(() => {
-      console.log('Login attempt:', formData);
-      setIsLoading(false);
-      // Redirect after successful login
+    setErrors({});
+    setSuccessMessage('');
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        // Handling validation errors
+        if (result.details) {
+          const newErrors: Record<string, string> = {};
+          result.details.forEach((err: any) => {
+            newErrors[err.field] = err.message;
+          });
+          setErrors(newErrors);
+        } else if (result.error) {
+          setErrors({ general: result.error });
+        } else {
+          setErrors({ general: 'Erro ao fazer login' });
+        }
+        return;
+      }
+
+      // Successful login
+      // Store user in localStorage (temporary)
+      localStorage.setItem('user', JSON.stringify(result.user));
+
+      // Redirect to dashboard
       router.push('/dashboard');
-    }, 1500);
+    } catch (error) {
+      setErrors({ general: 'Erro de conexão. Tente novamente.' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear field error when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
   };
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200">
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Email Field */}
-        <div className="space-y-2">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <Mail className="w-5 h-5 text-gray-400" />
-            </div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="seu@email.com"
-              className="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
-              required
-            />
-          </div>
-        </div>
-        {/* Password Field */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Senha
-            </label>
-          </div>
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <Lock className="w-5 h-5 text-gray-400" />
-            </div>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              className="w-full pl-10 pr-12 py-3 rounded-lg border-2 border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              {showPassword ? (
-                <EyeOff className="w-5 h-5" />
-              ) : (
-                <Eye className="w-5 h-5" />
-              )}
-            </button>
-          </div>
-        </div>
-        {/* Submit Button */}
+        {successMessage && (
+          <AuthMessage type="success" message={successMessage} />
+        )}
+        {errors.general && (
+          <AuthMessage type="error" message={errors.general} />
+        )}
+        <EmailField
+          value={formData.email}
+          onChange={(value) => handleChange('email', value)}
+          error={errors.email}
+        />
+        <PasswordField
+          value={formData.password}
+          onChange={(value) => handleChange('password', value)}
+          error={errors.password}
+        />
         <button
           type="submit"
           disabled={isLoading}
@@ -111,10 +116,15 @@ export function LoginForm() {
             <span>Entrar na Conta</span>
           )}
         </button>
-        {/* Demo Credentials */}
-        <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <p className="text-xs text-gray-600 text-center">
-            <strong>Demo:</strong> Use qualquer email e senha para testar
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Não tem uma conta?{' '}
+            <a
+              href="/register"
+              className="text-green-600 hover:text-green-700 font-medium"
+            >
+              Cadastre-se
+            </a>
           </p>
         </div>
       </form>
