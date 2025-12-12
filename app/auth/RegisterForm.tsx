@@ -1,8 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, User, Lock, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { CheckCircle } from 'lucide-react';
+import { NameField } from './register/NameField';
+import { EmailField } from './register/EmailField';
+import { PasswordField } from './register/PasswordField';
+import { ConfirmPasswordField } from './register/ConfirmPasswordField';
+import { AuthMessage } from './login/AuthMessage';
 
 export function RegisterForm() {
   const router = useRouter();
@@ -14,115 +19,116 @@ export function RegisterForm() {
     password: '',
     confirmPassword: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Registration simulation
-    setTimeout(() => {
-      console.log('Registration attempt:', formData);
+    setErrors({});
+
+    // Basic validation on the frontend
+    const newErrors: Record<string, string> = {};
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'As senhas não coincidem';
+    }
+
+    if (formData.password.length < 6) {
+      newErrors.password = 'A senha deve ter pelo menos 6 caracteres';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       setIsLoading(false);
-      // Redirect after successful registration.
-      router.push('/dashboard');
-    }, 1500);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          name: formData.name || undefined,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        // Handling validation errors
+        if (result.details) {
+          const apiErrors: Record<string, string> = {};
+          result.details.forEach((err: any) => {
+            apiErrors[err.field] = err.message;
+          });
+          setErrors(apiErrors);
+        } else if (result.error) {
+          setErrors({ general: result.error });
+        } else {
+          setErrors({ general: 'Erro ao criar conta' });
+        }
+        return;
+      }
+
+      // Success - redirect to login
+      router.push('/login?registered=true');
+    } catch (error) {
+      setErrors({ general: 'Erro de conexão. Tente novamente.' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear field error when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200">
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name Field */}
-        <div className="space-y-2">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Nome (opcional)
-          </label>
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <User className="w-5 h-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Seu nome"
-              className="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
-            />
-          </div>
-        </div>
-        {/* Email Field */}
-        <div className="space-y-2">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <Mail className="w-5 h-5 text-gray-400" />
-            </div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="seu@email.com"
-              className="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
-              required
-            />
-          </div>
-        </div>
-
-        {/* Password Field */}
-        <div className="space-y-2">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Senha
-          </label>
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <Lock className="w-5 h-5 text-gray-400" />
-            </div>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              className="w-full pl-10 pr-12 py-3 rounded-lg border-2 border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
-              required
-              minLength={6}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              {showPassword ? (
-                <EyeOff className="w-5 h-5" />
-              ) : (
-                <Eye className="w-5 h-5" />
-              )}
-            </button>
-          </div>
-          <p className="text-xs text-gray-500">Mínimo de 6 caracteres</p>
-        </div>
-        {/* Submit Button */}
+        {errors.general && (
+          <AuthMessage type="error" message={errors.general} />
+        )}
+        <NameField
+          value={formData.name}
+          onChange={(value) => handleChange('name', value)}
+          error={errors.name}
+        />
+        <EmailField
+          value={formData.email}
+          onChange={(value) => handleChange('email', value)}
+          error={errors.email}
+        />
+        <PasswordField
+          value={formData.password}
+          onChange={(value) => handleChange('password', value)}
+          error={errors.password}
+          showPassword={showPassword}
+          onTogglePassword={togglePasswordVisibility}
+        />
+        <ConfirmPasswordField
+          value={formData.confirmPassword}
+          onChange={(value) => handleChange('confirmPassword', value)}
+          error={errors.confirmPassword}
+          showPassword={showPassword}
+        />
         <button
           type="submit"
           disabled={isLoading}
@@ -140,6 +146,17 @@ export function RegisterForm() {
             </>
           )}
         </button>
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Já tem uma conta?{' '}
+            <a
+              href="/login"
+              className="text-green-600 hover:text-green-700 font-medium"
+            >
+              Faça login
+            </a>
+          </p>
+        </div>
       </form>
     </div>
   );
