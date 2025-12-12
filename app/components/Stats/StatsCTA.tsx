@@ -1,6 +1,27 @@
+'use client';
+
 import { Link as LinkIcon } from 'lucide-react';
 
 export function StatsCTA() {
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    e.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <div className="mt-16 text-center">
       <div className="inline-block bg-linear-to-r from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-200 max-w-2xl mx-auto">
@@ -11,7 +32,8 @@ export function StatsCTA() {
           Comece agora e experimente todas as funcionalidades implementadas
         </p>
         <a
-          href="#shorten"
+          href="#home"
+          onClick={(e) => scrollToSection(e, 'home')}
           className="inline-flex items-center gap-2 px-8 py-3 bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl text-lg"
         >
           <LinkIcon className="w-5 h-5" />
