@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-type GeoData = {
-  country?: string;
-  city?: string;
-  region?: string;
-  latitude?: number;
-  longitude?: number;
-};
-
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -28,7 +20,9 @@ export async function GET(
     }
 
     // GEO VERCEL
-    const geo = (request as NextRequest & { geo?: GeoData }).geo;
+    const country = request.headers.get('x-vercel-ip-country') ?? null;
+    const city = request.headers.get('x-vercel-ip-city') ?? null;
+    const region = request.headers.get('x-vercel-ip-region') ?? null;
 
     // HEADERS
     const ip =
@@ -50,8 +44,8 @@ export async function GET(
           ip,
           userAgent,
           referrer,
-          country: geo?.country ?? null, // BR, US
-          city: geo?.city ?? null,
+          country, // BR, US
+          city,
         },
       }),
     ]);
