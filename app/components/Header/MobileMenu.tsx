@@ -1,6 +1,7 @@
 'use client';
 
-import { Link2, User, UserPlus, X } from 'lucide-react';
+import { Link2, User, UserPlus, X, LayoutDashboard } from 'lucide-react';
+import { useAuth } from '@/app/context/AuthContext';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -8,6 +9,8 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const { user, isLoading } = useAuth();
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -34,8 +37,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         onClick={onClose}
       />
       {/* Menu Panel */}
-      <div className="md:hidden fixed inset-x-0 top-0 h-full bg-white z-50 overflow-y-auto">
-        {/* Menu Header */}
+      <div className="md:hidden fixed inset-x-0 top-0 h-full bg-white z-50 overflow-y-auto flex flex-col">
+        {/* Header */}
         <div className="sticky top-0 border-b border-gray-200 bg-white px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-green-100">
@@ -51,8 +54,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <X className="w-5 h-5" />
           </button>
         </div>
-        {/* Menu Content */}
-        <div className="p-4">
+        {/* Content with flex-grow */}
+        <div className="p-4 flex flex-col grow">
+          {/* Links */}
           <div className="flex flex-col space-y-2">
             <button
               onClick={() => scrollToSection('home')}
@@ -73,24 +77,41 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               Sobre
             </button>
           </div>
-          {/* Auth Section */}
-          <div className="mt-8 pt-6 border-t border-gray-200 space-y-3">
-            <a
-              href="/login"
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-green-600 text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 font-medium"
-              onClick={onClose}
-            >
-              <User className="w-4 h-4" />
-              <span>Entrar</span>
-            </a>
-            <a
-              href="/register"
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200 font-medium"
-              onClick={onClose}
-            >
-              <UserPlus className="w-4 h-4" />
-              <span>Cadastrar</span>
-            </a>
+          {/* Button fixed at the bottom */}
+          <div className="mt-auto pt-6 border-t border-gray-200 space-y-3">
+            {!isLoading &&
+              (user ? (
+                <>
+                  <a
+                    href="/dashboard"
+                    onClick={onClose}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    <span>Dashboard</span>
+                  </a>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="/login"
+                    onClick={onClose}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-green-600 text-green-600 hover:bg-green-50 rounded-lg font-medium"
+                  >
+                    <User className="w-4 h-4" />
+                    <span>Entrar</span>
+                  </a>
+
+                  <a
+                    href="/register"
+                    onClick={onClose}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium"
+                  >
+                    <UserPlus className="w-4 h-4" />
+                    <span>Cadastrar</span>
+                  </a>
+                </>
+              ))}
           </div>
         </div>
       </div>

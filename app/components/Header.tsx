@@ -8,8 +8,11 @@ import { AuthButtons } from './Header/AuthButtons';
 import { MobileMenu } from './Header/MobileMenu';
 import { MobileMenuButton } from './Header/MobileMenuButton';
 import { HeaderAuth } from './Header/HeaderAuth';
+import { useAuth } from '@/app/context/AuthContext';
+import { UserLogged } from './Header/UserLogged';
 
 export function Header() {
+  const { user, isLoading } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -56,7 +59,7 @@ export function Header() {
             <DesktopNav />
             {/* Buttons - right */}
             <div className="flex items-center gap-3">
-              <AuthButtons />
+              {!isLoading && (user ? <UserLogged /> : <AuthButtons />)}
               <MobileMenuButton
                 isOpen={isMobileMenuOpen}
                 onClick={handleMobileMenuToggle}
