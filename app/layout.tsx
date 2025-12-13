@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'ShortBeam - Encurtador de URLs',
   description: 'Encurte seus links de forma rápida e gratuita',
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({
