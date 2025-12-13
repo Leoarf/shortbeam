@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params:  Promise<{ slug: string }> }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     const { slug } = await params;
@@ -41,8 +41,14 @@ export async function GET(
         city: true,
         createdAt: true,
       },
-      take: 200, // I increased it to 200 records
+      take: 200,
     });
+
+    // Decode city names for all analytics records
+    const decodedAnalytics = analytics.map((item) => ({
+      ...item,
+      city: item.city ? decodeURIComponent(item.city) : item.city,
+    }));
 
     // Calculate statistics
     const totalClicks = shortUrl.clicks;
@@ -50,28 +56,30 @@ export async function GET(
     // Unique countries (excluding null and "Local")
     const uniqueCountries = [
       ...new Set(
-        analytics
+        decodedAnalytics
           .filter((a) => a.country && a.country !== 'Local')
           .map((a) => a.country)
       ),
     ];
 
-    // Unique cities (excluding null and "Local")
+    // Unique cities (excluding null and "Local") - already decoded
     const uniqueCities = [
       ...new Set(
-        analytics.filter((a) => a.city && a.city !== 'Local').map((a) => a.city)
+        decodedAnalytics
+          .filter((a) => a.city && a.city !== 'Local')
+          .map((a) => a.city)
       ),
     ];
 
     // Group by date
     const clicksByDate: Record<string, number> = {};
-    analytics.forEach((item) => {
+    decodedAnalytics.forEach((item) => {
       const date = item.createdAt.toISOString().split('T')[0];
       clicksByDate[date] = (clicksByDate[date] || 0) + 1;
     });
 
     // Top referrers
-    const referrers = analytics
+    const referrers = decodedAnalytics
       .filter((a) => a.referrer)
       .reduce((acc: Record<string, number>, item) => {
         try {
@@ -89,7 +97,7 @@ export async function GET(
       .slice(0, 10);
 
     // Top countries (excluding null and "Local")
-    const countries = analytics
+    const countries = decodedAnalytics
       .filter((a) => a.country && a.country !== 'Local')
       .reduce((acc: Record<string, number>, item) => {
         acc[item.country!] = (acc[item.country!] || 0) + 1;
@@ -102,22 +110,25 @@ export async function GET(
       .slice(0, 10)
       .map((item) => ({
         ...item,
-        country: getCountryName(item.country), // Add country name
+        country: getCountryName(item.country),
       }));
 
     // Devices
-    const devices = analytics.reduce((acc: Record<string, number>, item) => {
-      const ua = item.userAgent?.toLowerCase() || '';
-      let device = 'Desktop';
+    const devices = decodedAnalytics.reduce(
+      (acc: Record<string, number>, item) => {
+        const ua = item.userAgent?.toLowerCase() || '';
+        let device = 'Desktop';
 
-      if (ua.includes('mobile')) device = 'Mobile';
-      if (ua.includes('tablet')) device = 'Tablet';
-      if (ua.includes('android')) device = 'Android';
-      if (ua.includes('iphone') || ua.includes('ipad')) device = 'iOS';
+        if (ua.includes('mobile')) device = 'Mobile';
+        if (ua.includes('tablet')) device = 'Tablet';
+        if (ua.includes('android')) device = 'Android';
+        if (ua.includes('iphone') || ua.includes('ipad')) device = 'iOS';
 
-      acc[device] = (acc[device] || 0) + 1;
-      return acc;
-    }, {});
+        acc[device] = (acc[device] || 0) + 1;
+        return acc;
+      },
+      {}
+    );
 
     const deviceStats = Object.entries(devices)
       .map(([device, count]) => ({ device, count }))
@@ -126,8 +137,8 @@ export async function GET(
     return NextResponse.json({
       url: shortUrl,
       analytics: {
-        total: analytics.length,
-        data: analytics,
+        total: decodedAnalytics.length,
+        data: decodedAnalytics, // Use decoded analytics here
       },
       statistics: {
         totalClicks,
