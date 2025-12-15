@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Usuário não autenticado',
+          error: 'Unauthenticated user',
         },
         { status: 401 }
       );
@@ -70,11 +70,11 @@ export async function GET(request: NextRequest) {
         : null,
     });
   } catch (error) {
-    console.error('Erro ao buscar links do usuário:', error);
+    console.error('Error retrieving user links:', error);
     return NextResponse.json(
       {
         success: false,
-        error: 'Erro interno do servidor',
+        error: 'Internal server error',
       },
       { status: 500 }
     );
