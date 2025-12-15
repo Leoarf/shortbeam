@@ -3,19 +3,20 @@ import { z } from 'zod';
 export const createShortUrlSchema = z.object({
   url: z
     .string()
-    .url({ message: 'Por favor, insira uma URL válida' })
-    .min(1, { message: 'URL é obrigatória' }),
+    .url({ message: 'Please enter a valid URL' })
+    .min(1, { message: 'URL is required' }),
   customSlug: z
     .string()
     .optional()
     .refine((slug) => !slug || /^[a-zA-Z0-9_-]+$/.test(slug), {
-      message: 'Slug pode conter apenas letras, números, hífens e underscores',
+      message:
+        'Slug can only contain letters, numbers, hyphens, and underscores',
     })
     .refine((slug) => !slug || slug.length >= 3, {
-      message: 'Slug deve ter pelo menos 3 caracteres',
+      message: 'Slug must be at least 3 characters long',
     })
     .refine((slug) => !slug || slug.length <= 50, {
-      message: 'Slug deve ter no máximo 50 caracteres',
+      message: 'Slug must be at most 50 characters long',
     }),
 });
 
@@ -26,21 +27,21 @@ export const registerUserSchema = z
   .object({
     email: z
       .string()
-      .email({ message: 'Por favor, insira um email válido' })
-      .min(1, { message: 'Email é obrigatório' }),
+      .email({ message: 'Please enter a valid email' })
+      .min(1, { message: 'Email is required' }),
     name: z
       .string()
       .optional()
       .refine((name) => !name || name.length >= 2, {
-        message: 'Nome deve ter pelo menos 2 caracteres',
+        message: 'Name must be at least 2 characters long',
       })
       .refine((name) => !name || name.length <= 100, {
-        message: 'Nome deve ter no máximo 100 caracteres',
+        message: 'Name must be at most 100 characters long',
       }),
     password: z
       .string()
-      .min(6, { message: 'Senha deve ter no mínimo 6 caracteres' })
-      .max(100, { message: 'Senha deve ter no máximo 100 caracteres' }),
+      .min(6, { message: 'Password must be at least 6 characters long' })
+      .max(100, { message: 'Password must be at most 100 characters long' }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -54,9 +55,9 @@ export type RegisterUserInput = z.infer<typeof registerUserSchema>;
 export const loginUserSchema = z.object({
   email: z
     .string()
-    .email({ message: 'Por favor, insira um email válido' })
-    .min(1, { message: 'Email é obrigatório' }),
-  password: z.string().min(1, { message: 'Senha é obrigatória' }),
+    .email({ message: 'Please enter a valid email' })
+    .min(1, { message: 'Email is required' }),
+  password: z.string().min(1, { message: 'Password is required' }),
 });
 
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
