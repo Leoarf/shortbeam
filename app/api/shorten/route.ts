@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log('POST /api/shorten - Dados recebidos:', body);
+    console.log('POST /api/shorten - Data received:', body);
 
     // Validate with the extended schema
     const validationResult = extendedCreateShortUrlSchema.safeParse(body);
@@ -27,11 +27,11 @@ export async function POST(request: NextRequest) {
         validationResult.error.flatten().fieldErrors
       ).map(([field, messages]) => ({
         field,
-        message: messages?.join(', ') || 'Erro de validação',
+        message: messages?.join(', ') || 'Validation error',
       }));
       return NextResponse.json(
         {
-          error: 'Validação falhou',
+          error: 'Validation failed',
           details: errorDetails,
         },
         { status: 400 }
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     const { url, customSlug, userId } = validationResult.data;
 
-    console.log('Processando:', { url, customSlug, userId });
+    console.log('Processing:', { url, customSlug, userId });
 
     // Generate slug
     let slug = customSlug?.trim();
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       if (customSlug) {
         return NextResponse.json(
           {
-            error: 'Este slug já está em uso',
+            error: 'This slug is already in use.',
             field: 'customSlug',
           },
           { status: 409 }
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
 
     // If userId was provided, associate it with the link
     if (userId) {
-      console.log('UserID fornecido, verificando usuário...');
+      console.log('UserID provided, verifying user...');
 
       // Check if the user exists
       try {
@@ -86,18 +86,16 @@ export async function POST(request: NextRequest) {
 
         if (userExists) {
           data.userId = userId;
-          console.log('✅ Link será associado ao usuário');
+          console.log('✅ The link will be associated with the user.');
         } else {
-          console.log(
-            '⚠️  Usuário não encontrado, criando link sem associação'
-          );
+          console.log('⚠️ User not found, creating link without association.');
         }
       } catch (error) {
-        console.log('⚠️  Erro ao verificar usuário, criando link mesmo assim');
+        console.log('⚠️ Error verifying user, link created anyway.');
       }
     }
 
-    console.log('Criando link com dados:', data);
+    console.log('Creating a link with data:', data);
 
     // Create short URL
     const shortUrl = await prisma.shortUrl.create({
@@ -113,7 +111,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log('✅ Link criado com sucesso:', shortUrl);
+    console.log('✅ Link created successfully:', shortUrl);
 
     // Shortened full URL
     const shortenedUrl = `${
@@ -126,8 +124,8 @@ export async function POST(request: NextRequest) {
         shortUrl: shortenedUrl,
         success: true,
         message: shortUrl.userId
-          ? 'Link criado e associado à sua conta!'
-          : 'Link criado (sem associação com usuário)',
+          ? 'Link created and associated with your account!'
+          : 'Link created (no user association)',
       },
       { status: 201 }
     );
@@ -136,13 +134,13 @@ export async function POST(request: NextRequest) {
 
     if (error instanceof Error && error.message.includes('Unique constraint')) {
       return NextResponse.json(
-        { error: 'Este slug já está em uso. Tente outro.' },
+        { error: 'This slug is already in use. Try another one.' },
         { status: 409 }
       );
     }
 
     return NextResponse.json(
-      { error: 'Erro interno do servidor' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
