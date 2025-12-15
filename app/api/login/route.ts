@@ -16,12 +16,12 @@ export async function POST(request: NextRequest) {
 
       const errors = Object.entries(fieldErrors).map(([field, messages]) => ({
         field,
-        message: messages?.join(', ') || 'Erro de validação',
+        message: messages?.join(', ') || 'Validation error',
       }));
 
       return NextResponse.json(
         {
-          error: 'Validação falhou',
+          error: 'Validation failed',
           details: errors,
         },
         { status: 400 }
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         {
-          error: 'Email ou senha incorretos',
+          error: 'Incorrect email or password',
         },
         { status: 401 }
       );
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: 'Login realizado com sucesso',
+        message: 'Login successfully',
         user: userWithoutPassword,
       },
       { status: 200 }
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error during login:', error);
     return NextResponse.json(
-      { error: 'Erro interno do servidor' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
