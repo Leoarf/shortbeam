@@ -13,16 +13,12 @@ export async function GET(
     });
 
     if (!shortUrl) {
-      return NextResponse.json(
-        { error: 'Link não encontrado' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Link not found' }, { status: 404 });
     }
 
     // GEO VERCEL
     const country = request.headers.get('x-vercel-ip-country') ?? null;
     const city = request.headers.get('x-vercel-ip-city') ?? null;
-    const region = request.headers.get('x-vercel-ip-region') ?? null;
 
     // HEADERS
     const ip =
@@ -59,7 +55,7 @@ export async function GET(
   } catch (error) {
     console.error('Error redirecting:', error);
     return NextResponse.json(
-      { error: 'Erro interno do servidor' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
