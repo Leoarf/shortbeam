@@ -19,8 +19,8 @@ export default function RedirectPage({ params }: PageProps) {
         const resolvedParams = await params;
         setSlug(resolvedParams.slug);
       } catch (err) {
-        console.error('Erro ao obter slug:', err);
-        setError('Erro ao processar o link');
+        console.error('Error retrieving slug:', err);
+        setError('Error processing link');
         setLoading(false);
       }
     };
@@ -36,7 +36,7 @@ export default function RedirectPage({ params }: PageProps) {
       setError('');
 
       try {
-        console.log(`Buscando URL para slug: ${slug}`);
+        console.log(`Searching for URL for slug: ${slug}`);
 
         // Use a fetch function to obtain the original URL
         const response = await fetch(`/api/${slug}`);
@@ -44,7 +44,7 @@ export default function RedirectPage({ params }: PageProps) {
         if (!response.ok) {
           const data = await response.json();
           throw new Error(
-            data.error || `Erro ${response.status}: Link não encontrado`
+            data.error || `Error ${response.status}: Link not found`
           );
         }
 
@@ -52,10 +52,10 @@ export default function RedirectPage({ params }: PageProps) {
         const url = data.url;
 
         if (!url) {
-          throw new Error('URL não encontrada na resposta');
+          throw new Error('URL not found in the response.');
         }
 
-        console.log(`Redirecionando para: ${url}`);
+        console.log(`Redirecting to: ${url}`);
         setOriginalUrl(url);
 
         // Redirect after a brief delay to show loading
@@ -63,13 +63,13 @@ export default function RedirectPage({ params }: PageProps) {
           window.location.href = url;
         }, 500);
       } catch (err) {
-        console.error('Erro ao redirecionar:', err);
+        console.error('Error redirecting:', err);
         setLoading(false);
 
         const errorMessage =
-          err instanceof Error ? err.message : 'Erro desconhecido';
+          err instanceof Error ? err.message : 'Unknown error';
 
-        setError(`Não foi possível redirecionar: ${errorMessage}`);
+        setError(`It was not possible to redirect: ${errorMessage}`);
       }
     };
 
@@ -82,14 +82,16 @@ export default function RedirectPage({ params }: PageProps) {
         <div className="text-center max-w-md">
           <Loader2 className="w-12 h-12 text-green-600 animate-spin mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Redirecionando...
+            Redirecting...
           </h1>
           <div className="mb-4">
             <div className="inline-block px-3 py-1 bg-gray-100 rounded-full">
               <code className="font-mono text-sm text-gray-800">/{slug}</code>
             </div>
           </div>
-          <p className="text-gray-600">Aguarde enquanto buscamos o destino.</p>
+          <p className="text-gray-600">
+            Please wait while we search for the destination.
+          </p>
         </div>
       </div>
     );
@@ -103,13 +105,13 @@ export default function RedirectPage({ params }: PageProps) {
             <AlertCircle className="w-8 h-8 text-red-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Não foi possível redirecionar
+            It was not possible to redirect
           </h1>
           <p className="text-gray-600 mb-6">{error}</p>
           <div className="space-y-3 mb-6">
             {originalUrl && (
               <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-sm text-gray-700 mb-2">URL encontrada:</p>
+                <p className="text-sm text-gray-700 mb-2">URL found:</p>
                 <a
                   href={originalUrl}
                   target="_blank"
@@ -122,7 +124,7 @@ export default function RedirectPage({ params }: PageProps) {
               </div>
             )}
             <div className="p-3 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-700 mb-1">Link tentado:</p>
+              <p className="text-sm text-gray-700 mb-1">Link tried:</p>
               <code className="font-mono text-sm bg-gray-200 px-2 py-1 rounded">
                 /{slug}
               </code>
@@ -133,13 +135,13 @@ export default function RedirectPage({ params }: PageProps) {
               onClick={() => window.location.reload()}
               className="w-full px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors"
             >
-              Tentar novamente
+              Try again
             </button>
             <a
               href="/"
               className="block w-full px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition-colors text-center"
             >
-              Voltar para Home
+              Return to Home
             </a>
           </div>
         </div>
