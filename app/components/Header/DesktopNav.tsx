@@ -28,21 +28,21 @@ export function DesktopNav() {
           onClick={(e) => scrollToSection(e, 'home')}
           className="text-gray-700 hover:text-green-600 transition-colors duration-200 text-sm font-medium hover:underline underline-offset-4 decoration-2 cursor-pointer"
         >
-          Início
+          Home
         </a>
         <a
           href="#resources"
           onClick={(e) => scrollToSection(e, 'resources')}
           className="text-gray-700 hover:text-green-600 transition-colors duration-200 text-sm font-medium hover:underline underline-offset-4 decoration-2 cursor-pointer"
         >
-          Recursos
+          Resources
         </a>
         <a
           href="#about"
           onClick={(e) => scrollToSection(e, 'about')}
           className="text-gray-700 hover:text-green-600 transition-colors duration-200 text-sm font-medium hover:underline underline-offset-4 decoration-2 cursor-pointer"
         >
-          Sobre
+          About
         </a>
       </nav>
     </>

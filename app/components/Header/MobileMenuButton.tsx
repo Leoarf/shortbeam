@@ -10,7 +10,7 @@ export function MobileMenuButton({ isOpen, onClick }: MobileMenuButtonProps) {
     <button
       onClick={onClick}
       className="md:hidden p-2 text-gray-700 hover:text-green-600"
-      aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
+      aria-label={isOpen ? 'Close menu' : 'Open menu'}
     >
       {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
     </button>

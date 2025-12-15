@@ -11,7 +11,7 @@ export function Logo() {
           ShortBeam
         </h1>
         <p className="text-xs sm:text-sm text-gray-600 hidden xs:block">
-          Encurtador de URL inteligente
+          Smart URL shortener
         </p>
       </div>
     </div>

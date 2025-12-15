@@ -20,7 +20,7 @@ export function HeaderAuth() {
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
               {/* Text visible on small and larger screens */}
-              <span className="hidden sm:inline">Voltar para Home</span>
+              <span className="hidden sm:inline">Back to Home</span>
               {/* On very small mobile devices (less than 640px), only this text will be visible */}
               <span className="sm:hidden">Home</span>
             </a>
