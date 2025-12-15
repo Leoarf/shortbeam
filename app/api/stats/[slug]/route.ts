@@ -22,10 +22,7 @@ export async function GET(
     });
 
     if (!shortUrl) {
-      return NextResponse.json(
-        { error: 'Link não encontrado' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Link not found' }, { status: 404 });
     }
 
     // Seeking analytics with reasonable limits
@@ -153,7 +150,7 @@ export async function GET(
   } catch (error) {
     console.error('Error fetching stats:', error);
     return NextResponse.json(
-      { error: 'Erro interno do servidor' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
@@ -162,30 +159,30 @@ export async function GET(
 // Helper function to convert country code to name
 function getCountryName(countryCode: string): string {
   const countries: Record<string, string> = {
-    BR: 'Brasil',
-    US: 'Estados Unidos',
+    BR: 'Brazil',
+    US: 'United States',
     PT: 'Portugal',
-    ES: 'Espanha',
-    FR: 'França',
-    DE: 'Alemanha',
-    IT: 'Itália',
-    UK: 'Reino Unido',
-    JP: 'Japão',
+    ES: 'Spain',
+    FR: 'France',
+    DE: 'Germany',
+    IT: 'Italy',
+    UK: 'United Kingdom',
+    JP: 'Japan',
     CN: 'China',
-    RU: 'Rússia',
-    IN: 'Índia',
-    CA: 'Canadá',
-    AU: 'Austrália',
-    MX: 'México',
+    RU: 'Russia',
+    IN: 'India',
+    CA: 'Canada',
+    AU: 'Australia',
+    MX: 'Mexico',
     AR: 'Argentina',
     CL: 'Chile',
-    CO: 'Colômbia',
+    CO: 'Colombia',
     PE: 'Peru',
     VE: 'Venezuela',
-    UY: 'Uruguai',
-    PY: 'Paraguai',
-    BO: 'Bolívia',
-    EC: 'Equador',
+    UY: 'Uruguay',
+    PY: 'Paraguay',
+    BO: 'Bolivia',
+    EC: 'Ecuador',
   };
 
   return countries[countryCode] || countryCode;
