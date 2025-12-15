@@ -12,7 +12,7 @@ export function NameField({ value, onChange, error }: NameFieldProps) {
   return (
     <div className="space-y-2">
       <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-        Nome (opcional)
+        Name (optional)
       </label>
       <div className="relative">
         <div className="absolute left-3 top-1/2 transform -translate-y-1/2">

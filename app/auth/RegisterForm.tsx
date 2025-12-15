@@ -30,11 +30,11 @@ export function RegisterForm() {
     const newErrors: Record<string, string> = {};
 
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'As senhas não coincidem';
+      newErrors.confirmPassword = "The passwords don't match.";
     }
 
     if (formData.password.length < 6) {
-      newErrors.password = 'A senha deve ter pelo menos 6 caracteres';
+      newErrors.password = 'The password must be at least 6 characters long.';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -70,7 +70,7 @@ export function RegisterForm() {
         } else if (result.error) {
           setErrors({ general: result.error });
         } else {
-          setErrors({ general: 'Erro ao criar conta' });
+          setErrors({ general: 'Error creating account' });
         }
         return;
       }
@@ -78,7 +78,7 @@ export function RegisterForm() {
       // Success - redirect to login
       router.push('/login?registered=true');
     } catch (error) {
-      setErrors({ general: 'Erro de conexão. Tente novamente.' });
+      setErrors({ general: 'Connection error. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -137,23 +137,23 @@ export function RegisterForm() {
           {isLoading ? (
             <>
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Criando conta...</span>
+              <span>Creating account...</span>
             </>
           ) : (
             <>
               <CheckCircle className="w-5 h-5" />
-              <span>Criar Conta Gratuita</span>
+              <span>Create a Free Account</span>
             </>
           )}
         </button>
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            Já tem uma conta?{' '}
+            Do you already have an account?{' '}
             <a
               href="/login"
               className="text-green-600 hover:text-green-700 font-medium"
             >
-              Faça login
+              Log in
             </a>
           </p>
         </div>

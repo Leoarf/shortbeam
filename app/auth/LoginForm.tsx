@@ -21,7 +21,7 @@ function LoginFormContent() {
 
   useEffect(() => {
     if (searchParams.get('registered') === 'true') {
-      setSuccessMessage('Conta criada com sucesso! Faça login para continuar.');
+      setSuccessMessage('Account created successfully! Log in to continue.');
     }
   }, [searchParams]);
 
@@ -52,7 +52,7 @@ function LoginFormContent() {
         } else if (result.error) {
           setErrors({ general: result.error });
         } else {
-          setErrors({ general: 'Erro ao fazer login' });
+          setErrors({ general: 'Error when logging in' });
         }
         return;
       }
@@ -61,7 +61,7 @@ function LoginFormContent() {
       login(result.user);
       router.push('/dashboard');
     } catch (error) {
-      setErrors({ general: 'Erro de conexão. Tente novamente.' });
+      setErrors({ general: 'Connection error. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -105,20 +105,20 @@ function LoginFormContent() {
           {isLoading ? (
             <>
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Entrando...</span>
+              <span>Entering...</span>
             </>
           ) : (
-            <span>Entrar na Conta</span>
+            <span>Login to Account</span>
           )}
         </button>
         <div className="text-center pt-4 border-t border-gray-200">
           <p className="text-sm text-gray-600">
-            Não tem uma conta?{' '}
+            Don't have an account?{' '}
             <a
               href="/register"
               className="text-green-600 hover:text-green-700 font-medium"
             >
-              Cadastre-se
+              Register
             </a>
           </p>
         </div>
