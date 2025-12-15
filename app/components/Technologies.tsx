@@ -1,6 +1,6 @@
 export function Technologies() {
   const techs = [
-    { name: 'Next.js 14', color: 'bg-black text-white' },
+    { name: 'Next.js', color: 'bg-black text-white' },
     { name: 'TypeScript', color: 'bg-blue-600 text-white' },
     { name: 'PostgreSQL', color: 'bg-blue-800 text-white' },
     { name: 'Prisma ORM', color: 'bg-emerald-700 text-white' },
