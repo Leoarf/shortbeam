@@ -16,12 +16,12 @@ export async function POST(request: NextRequest) {
 
       const errors = Object.entries(fieldErrors).map(([field, messages]) => ({
         field,
-        message: messages?.[0] || 'Erro de validação', // Get only the first message
+        message: messages?.[0] || 'Validation error', // Get only the first message
       }));
 
       return NextResponse.json(
         {
-          error: 'Por favor, corrija os erros abaixo',
+          error: 'Please correct the errors below',
           details: errors,
         },
         { status: 400 }
@@ -38,12 +38,12 @@ export async function POST(request: NextRequest) {
     if (existingUser) {
       return NextResponse.json(
         {
-          error: 'Este email já está registrado',
+          error: 'This email is already registered',
           details: [
             {
               field: 'email',
               message:
-                'Este email já está em uso. Tente fazer login ou usar outro email.',
+                'This email address is already in use. Please try logging in or using a different email address.',
             },
           ],
         },
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: 'Conta criada com sucesso!',
+        message: 'Account created successfully!',
         user,
       },
       { status: 201 }
@@ -83,12 +83,12 @@ export async function POST(request: NextRequest) {
     if (error instanceof Error && error.message.includes('Unique constraint')) {
       return NextResponse.json(
         {
-          error: 'Este email já está registrado',
+          error: 'This email is already registered',
           details: [
             {
               field: 'email',
               message:
-                'Este email já está em uso. Tente fazer login ou usar outro email.',
+                'This email address is already in use. Please try logging in or using a different email address.',
             },
           ],
         },
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'Ocorreu um erro inesperado. Tente novamente.' },
+      { error: 'An unexpected error occurred. Please try again.' },
       { status: 500 }
     );
   }
