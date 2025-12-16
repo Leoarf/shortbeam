@@ -13,7 +13,7 @@ export function UrlShortener() {
       try {
         setUser(JSON.parse(userData));
       } catch (error) {
-        console.error('Erro ao carregar usuário:', error);
+        console.error('Error loading user:', error);
       }
     }
   }, []);
