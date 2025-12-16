@@ -24,7 +24,7 @@ const features = [
   {
     icon: Hash,
     title: 'Custom Slugs',
-    description: 'Create unique slugs like shortbeam.vercel.app/yourlink',
+    description: 'Create unique slugs like shortbeam.vercel.app/link',
     color: 'from-blue-500 to-cyan-600',
     prismaFeature: 'slug @unique field',
   },

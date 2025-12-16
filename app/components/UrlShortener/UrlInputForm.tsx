@@ -48,7 +48,7 @@ export function UrlInputForm({
         <div className="relative">
           <input
             type="url"
-            placeholder="https://exemplo.com/long-url"
+            placeholder="https://exemple.com/long-url"
             className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
               errors.url ? 'border-red-300' : 'border-gray-300'
             }`}
@@ -77,7 +77,7 @@ export function UrlInputForm({
             </span>
             <input
               type="text"
-              placeholder="meu-link"
+              placeholder="my-link"
               className="flex-1 bg-transparent border-0 outline-none text-gray-900 placeholder-gray-500 ml-1 min-w-0"
               value={customSlug}
               onChange={(e) => {
