@@ -12,10 +12,10 @@ export default function LoginPage() {
               <div className="w-6 h-6 bg-green-600 rounded-full"></div>
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Bem-vindo de volta
+              Welcome back
             </h1>
             <p className="text-gray-600">
-              Acesse sua conta para gerenciar seus links
+              Access your account to manage your links
             </p>
           </div>
           <LoginForm />
