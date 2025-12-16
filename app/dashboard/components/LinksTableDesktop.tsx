@@ -23,19 +23,19 @@ export function LinksTableDesktop({
         <thead>
           <tr className="bg-gray-50 border-b border-gray-200">
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Link Original
+              Original Link
             </th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Link Encurtado
+              Shortened Link
             </th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Cliques
+              Clicks
             </th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Criado em
+              Created at
             </th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Ações
+              Actions
             </th>
           </tr>
         </thead>
