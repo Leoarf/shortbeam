@@ -42,13 +42,13 @@ export function UrlInputForm({
         <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
           <Link2 className="w-3 h-3 sm:w-4 sm:h-4 text-green-600 shrink-0" />
           <label className="text-xs sm:text-sm font-medium text-gray-900">
-            Cole sua URL aqui
+            Paste your URL here
           </label>
         </div>
         <div className="relative">
           <input
             type="url"
-            placeholder="https://exemplo.com/url-longa"
+            placeholder="https://exemplo.com/long-url"
             className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
               errors.url ? 'border-red-300' : 'border-gray-300'
             }`}
@@ -67,13 +67,13 @@ export function UrlInputForm({
         <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
           <Wand2 className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 shrink-0" />
           <label className="text-xs sm:text-sm font-medium text-gray-900">
-            Personalize seu link (opcional)
+            Customize your link (optional)
           </label>
         </div>
         <div className="space-y-2">
           <div className="flex items-center bg-gray-50 border border-gray-300 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base">
             <span className="text-gray-600 font-mono text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none">
-              {host || 'carregando...'}/
+              {host || 'loading...'}/
             </span>
             <input
               type="text"
@@ -95,7 +95,7 @@ export function UrlInputForm({
             </p>
           )}
           <p className="text-xs text-gray-500">
-            Use apenas letras, números, hífens e underlines
+            Use only letters, numbers, hyphens, and underscores
           </p>
         </div>
       </div>
@@ -109,15 +109,15 @@ export function UrlInputForm({
           {isLoading ? (
             <>
               <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" />
-              <span className="whitespace-nowrap">Encurtando...</span>
+              <span className="whitespace-nowrap">Shortening...</span>
             </>
           ) : hasResult ? (
             <>
               <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="whitespace-nowrap">Criar Novo Link</span>
+              <span className="whitespace-nowrap">Create New Link</span>
             </>
           ) : (
-            <span className="whitespace-nowrap">Encurtar URL</span>
+            <span className="whitespace-nowrap">Shorten URL</span>
           )}
         </button>
         {hasResult && onReset && (
@@ -126,7 +126,7 @@ export function UrlInputForm({
             onClick={onReset}
             className="px-4 sm:px-6 py-2.5 sm:py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm sm:text-base whitespace-nowrap"
           >
-            Limpar
+            Clean
           </button>
         )}
       </div>
