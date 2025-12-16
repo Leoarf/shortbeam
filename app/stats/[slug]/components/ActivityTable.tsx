@@ -15,36 +15,36 @@ interface ActivityTableProps {
 
 // Country mapping for flag emojis
 const countryFlags: Record<string, string> = {
-  Brasil: '🇧🇷',
-  'Estados Unidos': '🇺🇸',
+  Brazil: '🇧🇷',
+  'United States': '🇺🇸',
   Portugal: '🇵🇹',
-  Espanha: '🇪🇸',
-  França: '🇫🇷',
-  Alemanha: '🇩🇪',
-  Itália: '🇮🇹',
-  'Reino Unido': '🇬🇧',
-  Japão: '🇯🇵',
+  Spain: '🇪🇸',
+  France: '🇫🇷',
+  Germany: '🇩🇪',
+  Italy: '🇮🇹',
+  'United Kingdom': '🇬🇧',
+  Japan: '🇯🇵',
   China: '🇨🇳',
-  Rússia: '🇷🇺',
-  Índia: '🇮🇳',
-  Canadá: '🇨🇦',
-  Austrália: '🇦🇺',
-  México: '🇲🇽',
+  Russia: '🇷🇺',
+  India: '🇮🇳',
+  Canada: '🇨🇦',
+  Australia: '🇦🇺',
+  Mexico: '🇲🇽',
   Argentina: '🇦🇷',
   Chile: '🇨🇱',
-  Colômbia: '🇨🇴',
+  Colombia: '🇨🇴',
   Peru: '🇵🇪',
   Venezuela: '🇻🇪',
-  Uruguai: '🇺🇾',
-  Paraguai: '🇵🇾',
-  Bolívia: '🇧🇴',
-  Equador: '🇪🇨',
+  Uruguay: '🇺🇾',
+  Paraguay: '🇵🇾',
+  Bolivia: '🇧🇴',
+  Ecuador: '🇪🇨',
   Local: '🏠',
 };
 
 export function ActivityTable({ analytics }: ActivityTableProps) {
   const getCountryWithFlag = (country: string | null) => {
-    if (!country) return '🌐 Desconhecido';
+    if (!country) return '🌐 Unknown';
     const flag = countryFlags[country] || '🌐';
     return `${flag} ${country}`;
   };
@@ -53,7 +53,7 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
     <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
       <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center gap-2">
         <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
-        <span>Atividade Recente</span>
+        <span>Recent Activity</span>
       </h2>
       <div className="overflow-x-auto -mx-4 sm:mx-0">
         <div className="inline-block min-w-full align-middle">
@@ -62,19 +62,19 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Data/Hora
+                    Date/Time
                   </th>
                   <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     IP
                   </th>
                   <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    País
+                    Country
                   </th>
                   <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Cidade
+                    City
                   </th>
                   <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Referência
+                    Referrer
                   </th>
                 </tr>
               </thead>
@@ -83,7 +83,7 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
                   analytics.slice(0, 10).map((item) => (
                     <tr key={item.id} className="hover:bg-gray-50">
                       <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(item.createdAt).toLocaleString('pt-BR')}
+                        {new Date(item.createdAt).toLocaleString('en-US')}
                       </td>
                       <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-gray-900 font-mono">
                         {item.ip}
@@ -106,7 +106,7 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
                             {new URL(item.referrer).hostname}
                           </a>
                         ) : (
-                          'Direto'
+                          'Direct'
                         )}
                       </td>
                     </tr>
@@ -117,7 +117,7 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
                       colSpan={5}
                       className="px-3 py-8 text-center text-gray-500 text-sm"
                     >
-                      Nenhuma atividade registrada ainda
+                      No activity recorded yet
                     </td>
                   </tr>
                 )}
@@ -129,7 +129,7 @@ export function ActivityTable({ analytics }: ActivityTableProps) {
       {analytics.length > 10 && (
         <div className="mt-4 text-center">
           <span className="text-gray-500 text-sm">
-            Mostrando 10 de {analytics.length} registros
+            Showing 10 of{analytics.length} records
           </span>
         </div>
       )}

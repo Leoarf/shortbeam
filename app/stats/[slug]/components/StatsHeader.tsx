@@ -34,12 +34,12 @@ export function StatsHeader({ shortUrl, originalUrl, slug }: StatsHeaderProps) {
               <Link
                 href="/dashboard"
                 className="text-gray-500 hover:text-gray-700 p-1"
-                aria-label="Voltar"
+                aria-label="Return"
               >
                 <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
               <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 truncate">
-                Estatísticas: {slug}
+                Statistics: {slug}
               </h1>
             </div>
             <div className="flex items-center gap-2 text-gray-600 text-sm">
@@ -55,7 +55,6 @@ export function StatsHeader({ shortUrl, originalUrl, slug }: StatsHeaderProps) {
               </a>
             </div>
           </div>
-
           <div className="flex flex-col xs:flex-row gap-2">
             <button
               onClick={handleCopy}
@@ -64,17 +63,17 @@ export function StatsHeader({ shortUrl, originalUrl, slug }: StatsHeaderProps) {
                   ? 'bg-green-600 text-white'
                   : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
               }`}
-              aria-label={copied ? 'Copiado!' : 'Compartilhar link'}
+              aria-label={copied ? 'Copied!' : 'Share link'}
             >
               {copied ? (
                 <>
                   <Check className="w-3.5 h-3.5" />
-                  <span className="hidden xs:inline">Copiado!</span>
+                  <span className="hidden xs:inline">Copied!</span>
                 </>
               ) : (
                 <>
                   <Share2 className="w-3.5 h-3.5" />
-                  <span className="hidden xs:inline">Compartilhar</span>
+                  <span className="hidden xs:inline">Share</span>
                 </>
               )}
             </button>
@@ -85,7 +84,7 @@ export function StatsHeader({ shortUrl, originalUrl, slug }: StatsHeaderProps) {
               className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center gap-1.5 text-sm"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">Visitar URL</span>
+              <span className="hidden xs:inline">Visit URL</span>
             </a>
           </div>
         </div>

@@ -36,7 +36,7 @@ export function TopList({ title, items, icon, emptyMessage }: TopListProps) {
                 </span>
               </div>
               <span className="bg-gray-100 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium whitespace-nowrap ml-2">
-                {item.count} cliques
+                {item.count} clicks
               </span>
             </div>
           ))
