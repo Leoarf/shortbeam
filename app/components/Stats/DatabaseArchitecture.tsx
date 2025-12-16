@@ -9,41 +9,39 @@ export function DatabaseArchitecture() {
             <Database className="w-8 h-8 text-green-600" />
           </div>
           <h4 className="text-xl font-bold text-gray-900 mt-4">
-            Arquitetura do Banco de Dados
+            Database Architecture
           </h4>
         </div>
         <div className="md:w-2/3">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <div className="text-sm font-semibold text-green-600 mb-1">
-                3 Modelos
+                3 Models
               </div>
               <p className="text-xs text-gray-600">ShortUrl, User, Analytics</p>
             </div>
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <div className="text-sm font-semibold text-green-600 mb-1">
-                14 Campos
+                14 Fields
               </div>
-              <p className="text-xs text-gray-600">
-                Dados estruturados e tipados
-              </p>
+              <p className="text-xs text-gray-600">Structured and typed data</p>
             </div>
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <div className="text-sm font-semibold text-green-600 mb-1">
-                8 Índices
+                8 Indexes
               </div>
               <p className="text-xs text-gray-600">
-                Consultas otimizadas e rápidas
+                Optimized and fast consultations
               </p>
             </div>
           </div>
           <p className="text-sm text-gray-600 mt-4">
-            Nossa infraestrutura é construída com{' '}
+            Our infrastructure is built with{' '}
             <span className="font-semibold text-green-600">
               Prisma + PostgreSQL
             </span>
-            , garantindo performance, escalabilidade e segurança para todos os
-            seus links.
+            , guaranteeing performance, scalability, and security for all your
+            links.
           </p>
         </div>
       </div>

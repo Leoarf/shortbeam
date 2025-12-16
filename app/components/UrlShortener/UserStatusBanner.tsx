@@ -20,11 +20,11 @@ export function UserStatusBanner({ user }: UserStatusBannerProps) {
         <span className="truncate">
           {user ? (
             <>
-              Olá {user.name || user.email?.split('@')[0] || 'Usuário'}! • Links
-              salvos
+              Hello {user.name || user.email?.split('@')[0] || 'Usuário'}! •
+              Links saved
             </>
           ) : (
-            <>Rápido • Seguro • Gratuito</>
+            <>Fast • Secure • Free</>
           )}
         </span>
       </div>
@@ -32,23 +32,23 @@ export function UserStatusBanner({ user }: UserStatusBannerProps) {
       <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 px-2">
         {user ? (
           <>
-            Encurte links e{' '}
+            Shorten links and{' '}
             <span className="text-green-600 block sm:inline">
-              salve na sua conta
+              save to your account
             </span>
           </>
         ) : (
           <>
-            Encurte seu link{' '}
-            <span className="text-green-600 block sm:inline">em segundos</span>
+            Shorten your link{' '}
+            <span className="text-green-600 block sm:inline">in seconds</span>
           </>
         )}
       </h2>
       {/* Description */}
       <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
         {user
-          ? 'Crie links que ficam salvos no seu dashboard pessoal'
-          : 'Cole sua URL abaixo e obtenha um link curto e rastreável'}
+          ? 'Create links that are saved to your personal dashboard'
+          : 'Paste your URL below and get a short, trackable link'}
       </p>
       {/* Dashboard Button */}
       {user && (
@@ -58,7 +58,7 @@ export function UserStatusBanner({ user }: UserStatusBannerProps) {
             className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap"
           >
             <span>📊</span>
-            <span>Ver meus links</span>
+            <span>See my links</span>
           </button>
         </div>
       )}

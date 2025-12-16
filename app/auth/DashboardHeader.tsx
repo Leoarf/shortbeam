@@ -31,7 +31,7 @@ export function DashboardHeader() {
               className="px-3 py-1.5 sm:px-4 sm:py-2 border border-green-600 text-green-600 
               text-sm rounded-lg hover:bg-green-50 transition"
             >
-              Voltar
+              Back
             </Link>
             {/* Logout */}
             <button
@@ -41,7 +41,7 @@ export function DashboardHeader() {
               hover:bg-red-50 transition"
             >
               <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Sair</span>
+              <span className="hidden sm:inline">Log out</span>
             </button>
           </div>
         </div>

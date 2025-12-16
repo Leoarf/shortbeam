@@ -77,8 +77,8 @@ export default function DashboardPage() {
       setUser(parsedUser);
       await fetchDashboardData(parsedUser.id);
     } catch (error) {
-      console.error('Erro ao carregar dashboard:', error);
-      setError('Erro ao carregar dados');
+      console.error('Error loading dashboard:', error);
+      setError('Error loading data');
       setLoading(false);
     }
   };
@@ -88,13 +88,13 @@ export default function DashboardPage() {
       const response = await fetch(`/api/user/links?userId=${userId}`);
 
       if (!response.ok) {
-        throw new Error(`Erro ${response.status} ao buscar dados`);
+        throw new Error(`Error ${response.status} while retrieving data`);
       }
 
       const result: ApiResponse = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Erro na resposta da API');
+        throw new Error(result.error || 'Error in API response');
       }
 
       setData({
@@ -105,8 +105,8 @@ export default function DashboardPage() {
         mostClicked: result.mostClicked,
       });
     } catch (err) {
-      console.error('Erro ao buscar dados:', err);
-      setError(err instanceof Error ? err.message : 'Erro desconhecido');
+      console.error('Error fetching data:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -133,23 +133,23 @@ export default function DashboardPage() {
               ⚠️
             </div>
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-              Erro ao carregar
+              Error loading
             </h2>
             <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
-              {error || 'Dados não encontrados'}
+              {error || 'Data not found'}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 onClick={handleRefresh}
                 className="px-5 sm:px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors"
               >
-                Tentar novamente
+                Try again
               </button>
               <button
                 onClick={() => router.push('/')}
                 className="px-5 sm:px-6 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg font-medium transition-colors"
               >
-                Criar Link
+                Create Link
               </button>
             </div>
           </div>
@@ -164,10 +164,10 @@ export default function DashboardPage() {
       <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
         <div className="mb-6 sm:mb-8">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-1">
-            Olá, {user.name || user.email?.split('@')[0] || 'Usuário'}! 👋
+            Hello, {user.name || user.email?.split('@')[0] || 'User'}! 👋
           </h1>
           <p className="text-gray-600 text-sm sm:text-base">
-            Gerencie seus links e acompanhe as estatísticas
+            Manage your links and track statistics
           </p>
         </div>
         <div className="mb-6 sm:mb-8">

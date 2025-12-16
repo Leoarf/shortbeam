@@ -47,7 +47,7 @@ export function LinksTableMobile({
           <div className="flex items-center gap-2 ml-2">
             <button
               onClick={() => router.push(`/stats/${link.slug}`)}
-              title="Ver estatísticas"
+              title="View statistics"
               className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
             >
               <BarChart3 className="w-4 h-4" />
@@ -69,7 +69,7 @@ export function LinksTableMobile({
             <button
               onClick={() => onCopy(link.slug, link.id)}
               className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
-              title="Copiar link"
+              title="Copy link"
             >
               {copiedId === link.id ? (
                 <span className="text-xs text-green-600">✓</span>
@@ -84,7 +84,7 @@ export function LinksTableMobile({
           <div className="flex items-center gap-2">
             <Eye className="w-4 h-4 text-gray-400" />
             <span className="font-medium text-gray-900">
-              {link.clicks} cliques
+              {link.clicks} clicks
             </span>
             <span className="text-xs text-gray-500">
               {link.clicks > 100 ? '🔥' : link.clicks > 50 ? '📈' : '📊'}
@@ -92,7 +92,7 @@ export function LinksTableMobile({
           </div>
           <div className="flex items-center gap-2 text-gray-600">
             <Calendar className="w-4 h-4" />
-            <span>{new Date(link.createdAt).toLocaleDateString('pt-BR')}</span>
+            <span>{new Date(link.createdAt).toLocaleDateString('en-US')}</span>
           </div>
         </div>
       </div>

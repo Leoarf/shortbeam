@@ -43,7 +43,7 @@ export function useStats() {
         const slug = params.slug as string;
 
         if (!slug) {
-          setError('Link inválido');
+          setError('Invalid link');
           setLoading(false);
           return;
         }
@@ -52,7 +52,7 @@ export function useStats() {
 
         if (!response.ok) {
           const data = await response.json();
-          throw new Error(data.error || 'Estatísticas não encontradas');
+          throw new Error(data.error || 'Statistics not found');
         }
 
         const data = await response.json();
@@ -62,7 +62,7 @@ export function useStats() {
       } catch (err) {
         console.error('Stats error:', err);
         setError(
-          err instanceof Error ? err.message : 'Erro ao carregar estatísticas'
+          err instanceof Error ? err.message : 'Error loading statistics'
         );
       } finally {
         setLoading(false);

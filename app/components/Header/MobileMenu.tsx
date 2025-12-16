@@ -62,19 +62,19 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               onClick={() => scrollToSection('home')}
               className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium text-left"
             >
-              Início
+              Home
             </button>
             <button
               onClick={() => scrollToSection('resources')}
               className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium text-left"
             >
-              Recursos
+              Resources
             </button>
             <button
               onClick={() => scrollToSection('about')}
               className="px-4 py-3 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200 text-base font-medium text-left"
             >
-              Sobre
+              About
             </button>
           </div>
           {/* Button fixed at the bottom */}
@@ -99,7 +99,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-green-600 text-green-600 hover:bg-green-50 rounded-lg font-medium"
                   >
                     <User className="w-4 h-4" />
-                    <span>Entrar</span>
+                    <span>Sign in</span>
                   </a>
 
                   <a
@@ -108,7 +108,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium"
                   >
                     <UserPlus className="w-4 h-4" />
-                    <span>Cadastrar</span>
+                    <span>Sign up</span>
                   </a>
                 </>
               ))}

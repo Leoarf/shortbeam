@@ -26,7 +26,7 @@ export function ResultDisplay({
     <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-xl">
       <div className="flex flex-col gap-3 sm:gap-4">
         <div className="text-xs sm:text-sm font-medium text-green-800">
-          ✅ Link encurtado com sucesso!
+          ✅ Link shortened successfully!
         </div>
         <div className="space-y-2">
           {/* Full URL */}
@@ -64,12 +64,12 @@ export function ResultDisplay({
             {copied ? (
               <>
                 <Check className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="whitespace-nowrap">Copiado!</span>
+                <span className="whitespace-nowrap">Copied!</span>
               </>
             ) : (
               <>
                 <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="whitespace-nowrap">Copiar Link</span>
+                <span className="whitespace-nowrap">Copy Link</span>
               </>
             )}
           </button>

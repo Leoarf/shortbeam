@@ -21,7 +21,7 @@ export function ConfirmPasswordField({
         htmlFor="confirmPassword"
         className="block text-sm font-medium text-gray-700"
       >
-        Confirmar Senha
+        Confirm Password
       </label>
       <div className="relative">
         <div className="absolute left-3 top-1/2 transform -translate-y-1/2">

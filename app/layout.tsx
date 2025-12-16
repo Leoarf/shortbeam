@@ -6,8 +6,8 @@ import { AuthProvider } from './context/AuthContext';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ShortBeam - Encurtador de URLs',
-  description: 'Encurte seus links de forma rápida e gratuita',
+  title: 'ShortBeam - URL shortener',
+  description: 'Shorten your links quickly and for free',
   icons: {
     icon: '/favicon.png',
   },
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="en-US">
       <body className={inter.className}>
         <AuthProvider>{children}</AuthProvider>
       </body>

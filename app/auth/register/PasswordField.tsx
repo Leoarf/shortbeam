@@ -30,7 +30,7 @@ export function PasswordField({
         htmlFor="password"
         className="block text-sm font-medium text-gray-700"
       >
-        Senha
+        Password
       </label>
       <div className="relative">
         <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -62,7 +62,7 @@ export function PasswordField({
         </button>
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
-      <p className="text-xs text-gray-500">Mínimo de 6 caracteres</p>
+      <p className="text-xs text-gray-500">Minimum of 6 characters</p>
     </div>
   );
 }

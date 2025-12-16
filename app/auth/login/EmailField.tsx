@@ -27,7 +27,7 @@ export function EmailField({ value, onChange, error }: EmailFieldProps) {
           name="email"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="seu@email.com"
+          placeholder="your@email.com"
           className={`w-full pl-10 pr-4 py-3 rounded-lg border-2 ${
             error ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-gray-50'
           } text-gray-900 placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200`}

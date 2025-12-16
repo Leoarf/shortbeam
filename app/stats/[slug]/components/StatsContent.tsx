@@ -77,42 +77,42 @@ export function StatsContent({
     <>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <StatsCard
-          title="Total de Cliques"
+          title="Total Clicks"
           value={statistics?.totalClicks || 0}
           icon={<MousePointer className="w-4 h-4 sm:w-5 sm:h-5" />}
           color="green"
         />
         <StatsCard
-          title="Países Únicos"
+          title="Unique Countries"
           value={statistics?.uniqueCountries || 0}
           icon={<MapPin className="w-4 h-4 sm:w-5 sm:h-5" />}
           color="blue"
         />
         <StatsCard
-          title="Cidades Únicas"
+          title="Unique Cities"
           value={statistics?.uniqueCities || 0}
           icon={<Users className="w-4 h-4 sm:w-5 sm:h-5" />}
           color="purple"
         />
         <StatsCard
-          title="Criado em"
-          value={new Date(urlData.createdAt).toLocaleDateString('pt-BR')}
+          title="Created at"
+          value={new Date(urlData.createdAt).toLocaleDateString('en-US')}
           icon={<Calendar className="w-4 h-4 sm:w-5 sm:h-5" />}
           color="amber"
         />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <TopList
-          title="Top Países"
+          title="Top Countries"
           items={topCountries}
           icon={<Globe className="w-4 h-4 sm:w-5 sm:h-5" />}
-          emptyMessage="Nenhum dado de país disponível"
+          emptyMessage="No country data available"
         />
         <TopList
-          title="Principais Referências"
+          title="Top Referrers"
           items={topReferrers}
           icon={<Share2 className="w-4 h-4 sm:w-5 sm:h-5" />}
-          emptyMessage="Nenhum referenciador disponível"
+          emptyMessage="No referrers available"
         />
       </div>
       {/* Device Chart */}
@@ -121,7 +121,7 @@ export function StatsContent({
           <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
             <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>Dispositivos</span>
+              <span>Devices</span>
             </h2>
             <div className="space-y-3">
               {deviceData.map((item) => (

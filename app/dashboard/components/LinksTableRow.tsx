@@ -81,7 +81,7 @@ export function LinksTableRow({ link, copiedId, onCopy }: LinksTableRowProps) {
           <Calendar className="w-4 h-4 text-gray-400" />
           <div>
             <div className="text-sm text-gray-900">
-              {new Date(link.createdAt).toLocaleDateString('pt-BR')}
+              {new Date(link.createdAt).toLocaleDateString('en-US')}
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@ export function LinksTableRow({ link, copiedId, onCopy }: LinksTableRowProps) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => router.push(`/stats/${link.slug}`)}
-            title="Ver estatísticas"
+            title="View statistics"
             className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
           >
             <BarChart3 className="w-4 h-4" />

@@ -19,7 +19,7 @@ export function PasswordField({ value, onChange, error }: PasswordFieldProps) {
           htmlFor="password"
           className="block text-sm font-medium text-gray-700"
         >
-          Senha
+          Password
         </label>
       </div>
       <div className="relative">

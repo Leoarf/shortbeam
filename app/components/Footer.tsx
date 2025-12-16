@@ -14,17 +14,17 @@ export function Footer() {
             <h3 className="text-xl font-bold text-gray-900">ShortBeam</h3>
           </div>
           <p className="text-gray-600 text-sm">
-            © {new Date().getFullYear()} Leoarf. Todos os direitos reservados.
+            © {new Date().getFullYear()} Leoarf. All rights reserved.
           </p>
           <div className="flex items-center gap-4 mt-4 md:mt-0">
             <span className="text-gray-600 hover:text-green-600 transition-colors text-sm cursor-default">
-              Termos
+              Terms
             </span>
             <span className="text-gray-600 hover:text-green-600 transition-colors text-sm cursor-default">
-              Privacidade
+              Privacy
             </span>
             <span className="text-gray-600 hover:text-green-600 transition-colors text-sm cursor-default">
-              Contato
+              Contact
             </span>
           </div>
         </div>

@@ -68,9 +68,9 @@ export function UrlInputSection({
           if (slugError) {
             throw new Error(slugError.message);
           }
-          throw new Error(result.error || 'Validação falhou');
+          throw new Error(result.error || 'Validation failed');
         }
-        throw new Error(result.error || 'Erro ao encurtar URL');
+        throw new Error(result.error || 'Error shortening URL');
       }
 
       setShortenedUrl(result.shortUrl);
@@ -80,7 +80,7 @@ export function UrlInputSection({
         onSubmitSuccess(result.shortUrl);
       }
     } catch (error) {
-      alert(error instanceof Error ? error.message : 'Erro desconhecido');
+      alert(error instanceof Error ? error.message : 'Unknown error');
     } finally {
       setIsLoading(false);
     }

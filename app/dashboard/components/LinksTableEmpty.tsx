@@ -11,17 +11,17 @@ export function LinksTableEmpty() {
           <Link2 className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
         </div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          Nenhum link criado ainda
+          No links created yet
         </h3>
         <p className="text-gray-600 mb-4 text-sm sm:text-base">
-          Comece criando seu primeiro link encurtado
+          Start by creating your first shortened link
         </p>
         <button
           onClick={() => router.push('/')}
           className="px-5 sm:px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
         >
           <Plus className="w-4 h-4" />
-          Criar Primeiro Link
+          Create First Link
         </button>
       </div>
     </div>
