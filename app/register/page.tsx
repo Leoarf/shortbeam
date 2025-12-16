@@ -12,10 +12,10 @@ export default function RegisterPage() {
               <div className="w-6 h-6 bg-green-600 rounded-full"></div>
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Crie sua conta
+              Create your account
             </h1>
             <p className="text-gray-600">
-              Comece a encurtar links e acompanhe suas estatísticas
+              Start shortening links and track your statistics
             </p>
           </div>
           <RegisterForm />
